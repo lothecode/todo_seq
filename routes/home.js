@@ -8,15 +8,18 @@ const { authenticated } = require('../config/auth')
 
 // 首頁
 router.get('/', authenticated, (req, res) => {
-  res.send('列出全部todo')
-  // const { todos, done } = req.body
-  // Todo.findAll({ where: { userId: req.user._id } })
-  //   .then(todos => {
-  //     res.render('index', {
-  //       todos,
-  //       done
-  //     })
-  //   })
+  User.findByPk(req.user.id)
+    .then((user) => {
+      // console.log(req.user.id)
+      if (!user) throw new Error("user not found")
+      return Todo.findAll({
+        where: { UserId: req.user.id }
+      })
+    })
+    .then((todos) => {
+      // console.log(todos)
+      return res.render('index', { todos: todos })
+    })
+    .catch((error) => { return res.status(422).json(error) })
 })
-
 module.exports = router
