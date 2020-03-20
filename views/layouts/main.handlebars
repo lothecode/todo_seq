@@ -15,11 +15,16 @@
 
 <body>
   <!-- navbar -->
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-dark bg-primary justify-content-between">
     <div class="container">
-      <a class="navbar-brand text-info" href="/todos">
-        Todo sequelize
+      <a href="/" class="navbar-brand">Todo List(sequelize)</a>
+
       </a>
+      {{#if isAuthenticated}}
+      <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+      {{else}}
+      <a href="/users/login" class="btn btn-outline-light">Login</a>
+      {{/if}}
     </div>
   </nav>
 

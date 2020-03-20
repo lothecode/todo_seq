@@ -3,7 +3,6 @@ const router = express.Router()
 const passport = require('passport')
 const db = require('../models')
 const User = db.User
-const Todo = db.Todo
 
 // 認證系統的路由
 // 登入頁面

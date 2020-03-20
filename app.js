@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 // 設定路由
 app.use('/users', require('./routes/user.js'))
 app.use('/', require('./routes/home.js'))
+app.use('/todos', require('./routes/todo.js'))
 
 app.listen(port, () => {
   console.log(`APP is running on port ${port}`)
