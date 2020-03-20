@@ -11,8 +11,11 @@ router.get('/login', (req, res) => {
   res.render('login')
 })
 // 登入檢查
-router.post('/login', (req, res) => {
-  res.send('login')
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: 'users/login'
+  })(req, res, next)
 })
 
 // 註冊頁面
