@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
+// "Handlebars: Access has been denied to resolve the property "done" because it is not an "own property" of its parent."
 // https://handlebarsjs.com/api-reference/runtime-options.html#options-to-control-prototype-access
 const Handlebars = require('handlebars')  //new add for @handlebars/allow-prototype-access
 // new add for @handlebars/allow-prototype-access, 要先安裝@handlebars/allow-prototype-access (npm install @handlebars/allow-prototype-access)
