@@ -8,6 +8,10 @@ const { authenticated } = require('../config/auth')
 
 
 // 新增一筆 Todo 頁面
+router.get('/', authenticated, (req, res) => {
+  return res.redirect('/')
+})
+
 router.get('/new', authenticated, (req, res) => {
   return res.render('new')
 })

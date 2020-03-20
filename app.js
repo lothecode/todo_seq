@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
+const flash = require('connect-flash')
 // "Handlebars: Access has been denied to resolve the property "done" because it is not an "own property" of its parent."
 // https://handlebarsjs.com/api-reference/runtime-options.html#options-to-control-prototype-access
 const Handlebars = require('handlebars')  //new add for @handlebars/allow-prototype-access
@@ -16,11 +17,13 @@ const db = require('./models')
 const Todo = db.Todo
 const User = db.User
 
+
+
 app.engine('handlebars', exphbs({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-
+app.use(flash())
 app.use(session({
   secret: 'secretkey',
   resave: 'false',
@@ -30,8 +33,12 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 require('./config/passport')(passport)
+
 app.use((req, res, next) => {
   res.locals.user = req.user
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 
