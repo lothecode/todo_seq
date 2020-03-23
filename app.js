@@ -12,12 +12,17 @@ const flash = require('connect-flash')
 const Handlebars = require('handlebars')  //new add for @handlebars/allow-prototype-access
 // new add for @handlebars/allow-prototype-access, 要先安裝@handlebars/allow-prototype-access (npm install @handlebars/allow-prototype-access)
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
+
+if (process.env.NODE_ENV !== 'production') {
+  // 如果不是 production 模式
+  require('dotenv').config()
+  // 使用 dotenv 讀取 .env 檔案
+}
+
 // 載入 model
 const db = require('./models')
 const Todo = db.Todo
 const User = db.User
-
-
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }))
 app.set('view engine', 'handlebars')
@@ -46,7 +51,8 @@ app.use((req, res, next) => {
 app.use('/users', require('./routes/user'))
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todo'))
+app.use('/auth', require('./routes/auths'))
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`APP is running on port ${port}`)
 })
